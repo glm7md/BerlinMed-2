@@ -131,7 +131,7 @@ def test_order_reduces_stock_and_is_idempotent(client, app):
         "items": [{"id": product_id, "quantity": 2}],
         "customer_name": "Guest Customer",
         "phone": "01000000000",
-        "shipping_address": "Cairo",
+        "shipping_address": "",
     }
     headers = {"X-CSRF-Token": csrf, "Idempotency-Key": "test-order-key"}
 
@@ -160,7 +160,7 @@ def test_order_rejects_insufficient_stock(client, app):
             "items": [{"id": product_id, "quantity": 2}],
             "customer_name": "Guest Customer",
             "phone": "01000000000",
-            "shipping_address": "Cairo",
+            "shipping_address": "",
         }),
         content_type="application/json",
         headers={"X-CSRF-Token": csrf},
