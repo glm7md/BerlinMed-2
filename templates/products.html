@@ -487,7 +487,7 @@
             grid.innerHTML = data.map(product => `
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="/static/images/${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
+                        <img src="${getImageUrl(product.image)}" alt="${escapeHtml(product.name)}">
                     </div>
                     <div class="product-info">
                         <h3>${escapeHtml(product.name)}</h3>

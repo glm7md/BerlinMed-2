@@ -2,6 +2,7 @@ import os
 import uuid
 from io import BytesIO
 
+import requests
 from flask import current_app
 from PIL import Image, UnidentifiedImageError
 
@@ -50,12 +51,14 @@ def save_product_image(file_storage):
     image_data.seek(0)
     filename = generate_unique_filename()
 
-    if current_app.config.get("S3_BUCKET"):
+    if current_app.config.get("SUPABASE_URL") and current_app.config.get("SUPABASE_KEY"):
+        return _save_to_supabase(image_data, filename)
+    elif current_app.config.get("S3_BUCKET"):
         _save_to_s3(image_data, filename)
+        return filename
     else:
         _save_locally(image_data, filename)
-
-    return filename
+        return filename
 
 
 def _save_locally(image_data, filename):
@@ -83,3 +86,27 @@ def _save_to_s3(image_data, filename):
         filename,
         ExtraArgs={"ContentType": "image/png"},
     )
+
+
+def _save_to_supabase(image_data, filename):
+    supabase_url = current_app.config["SUPABASE_URL"].rstrip("/")
+    supabase_key = current_app.config["SUPABASE_KEY"]
+    bucket = current_app.config.get("SUPABASE_BUCKET", "med-images")
+
+    upload_url = f"{supabase_url}/storage/v1/object/{bucket}/{filename}"
+
+    response = requests.post(
+        upload_url,
+        headers={
+            "Authorization": f"Bearer {supabase_key}",
+            "apikey": supabase_key,
+            "Content-Type": "image/png",
+        },
+        data=image_data.getvalue(),
+        timeout=30,
+    )
+
+    if response.status_code not in (200, 201):
+        raise RuntimeError(f"Supabase upload failed: {response.status_code} {response.text}")
+
+    return f"{supabase_url}/storage/v1/object/public/{bucket}/{filename}"
