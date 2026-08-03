@@ -120,7 +120,7 @@
                 return `
                     <tr>
                         <td>
-                            <img src="/static/images/${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                            <img src="${escapeHtml(getImageUrl(item.image))}" alt="${escapeHtml(item.name)}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                         </td>
                         <td>${escapeHtml(item.name)}</td>
                         <td>${item.price.toFixed(2)} USD</td>
@@ -168,12 +168,12 @@
             const customerName = document.getElementById('checkout-customer-name').value.trim();
             const phone = document.getElementById('checkout-phone').value.trim();
             const shippingAddress = document.getElementById('checkout-shipping-address').value.trim();
-
+ 
             if (!customerName || !phone || !shippingAddress) {
                 alert('Please provide your name, phone number and shipping address.');
                 return false;
             }
-
+ 
             const idempotencyKey = sessionStorage.getItem('checkout_idempotency_key') ||
                 (window.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`);
             sessionStorage.setItem('checkout_idempotency_key', idempotencyKey);
@@ -182,7 +182,7 @@
                 phone,
                 shipping_address: shippingAddress
             }, idempotencyKey);
-
+ 
             if (ok) {
                 alert('Thank you for your order!');
                 localStorage.removeItem('cart');
@@ -200,3 +200,4 @@
 
 </html>
 
+ 
