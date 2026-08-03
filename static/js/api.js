@@ -1,4 +1,3 @@
-
 function escapeHtml(value) {
   return String(value === null || value === undefined ? "" : value).replace(/[&<>"']/g, (ch) => ({
     "&": "&amp;",
@@ -7,6 +6,19 @@ function escapeHtml(value) {
     '"': "&quot;",
     "'": "&#39;",
   }[ch]));
+}
+
+function getImageUrl(image) {
+  if (!image) {
+    return '/static/images/placeholder.png';
+  }
+  if (image.startsWith('http://') || image.startsWith('https://')) {
+    return image;
+  }
+  if (image.startsWith('/static')) {
+    return image;
+  }
+  return `/static/uploads/${image}`;
 }
 
 const API = {

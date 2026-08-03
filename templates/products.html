@@ -511,21 +511,6 @@
                 if (product) addToCart(product);
             });
         });
-        function getImageUrl(image) {
-    if (!image) {
-        return '/static/images/placeholder.png'; // غيّرها لمسار أي صورة افتراضية عندك
-    }
-    // لو الصورة رابط كامل بالفعل (من Supabase Storage مثلاً)
-    if (image.startsWith('http://') || image.startsWith('https://')) {
-        return image;
-    }
-    // لو الصورة مسار محلي فيه /static بالفعل
-    if (image.startsWith('/static')) {
-        return image;
-    }
-    // لو مجرد اسم ملف أو مسار نسبي - عدّل السطر ده حسب مكان تخزين الصور عندك
-    return `/static/uploads/${image}`;
-}
 
         function addToCart(product) {
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
