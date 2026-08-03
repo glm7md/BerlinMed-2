@@ -18,7 +18,7 @@ function getImageUrl(image) {
   if (image.startsWith('/static')) {
     return image;
   }
-  return `/static/uploads/${image}`;
+  return `https://hfuajgmfmqwzjjzkdluo.supabase.co/storage/v1/object/public/med-images/${image}`;
 }
 
 const API = {
