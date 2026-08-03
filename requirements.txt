@@ -7,3 +7,4 @@ pg8000
 PyJWT
 gunicorn
 Pillow
+requests
