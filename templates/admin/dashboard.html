@@ -12,6 +12,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+        }
+
         .admin-dashboard {
             min-height: 100vh;
             background-color: #f5f7fa;
@@ -37,14 +49,20 @@
  
         .admin-container {
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
             min-height: calc(100vh - 80px);
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
  
         .admin-sidebar {
             background: white;
             border-right: 1px solid #eee;
             padding: 20px;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
         }
  
         .admin-sidebar h2 {
@@ -72,6 +90,8 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             font-weight: 500;
+            white-space: normal;
+            word-break: break-word;
         }
  
         .admin-nav li a:hover {
@@ -92,6 +112,16 @@
         .admin-main {
             padding: 30px;
             background-color: #f5f7fa;
+            min-width: 0;
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        .admin-main > .container,
+        .admin-header .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 10px;
         }
  
         .admin-title {
@@ -183,6 +213,11 @@
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
  
         .table-header {
             background: linear-gradient(135deg, #0084d6, #00a651);
@@ -208,6 +243,7 @@
  
         table {
             width: 100%;
+            min-width: 620px;
             border-collapse: collapse;
         }
  
@@ -276,6 +312,7 @@
  
         .action-btns {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
         }
  
@@ -336,15 +373,39 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
         }
  
         @media (max-width: 480px) {
+            .admin-main {
+                padding: 15px;
+            }
+
+            .admin-header h1 {
+                font-size: 22px;
+            }
+
             .stats-grid {
                 grid-template-columns: 1fr;
             }
  
             th, td {
-                padding: 15px;
+                padding: 12px 10px;
+            }
+
+            .action-btns {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-btn {
+                text-align: center;
+                justify-content: center;
             }
         }
     </style>
@@ -410,18 +471,20 @@
                     <div class="table-header">
                         <h3><i class="fas fa-box-open"></i> Product Management</h3>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product Image</th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="products-table-body">
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Image</th>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
