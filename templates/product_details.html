@@ -106,7 +106,7 @@
 
             document.getElementById('product-details-content').innerHTML = `
                 <div class="product-details-image">
-                    <img src="/static/images/${escapeHtml(data.image)}" alt="${escapeHtml(data.name)}">
+                    <img src="${getImageUrl(data.image)}" alt="${escapeHtml(data.name)}">
                 </div>
                 <div class="product-details-content">
                     <h1>${escapeHtml(data.name)}</h1>

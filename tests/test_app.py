@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 
 def get_csrf_token(client):
@@ -16,6 +17,14 @@ def create_product(app, name="Test Product", price="10.50", stock=10):
         db.session.add(product)
         db.session.commit()
         return product.id
+
+
+def test_product_details_template_uses_shared_image_url_helper():
+    template_path = Path(__file__).resolve().parents[1] / "templates" / "product_details.html"
+    content = template_path.read_text(encoding="utf-8")
+
+    assert "getImageUrl(data.image)" in content
+    assert 'src="/static/images/${escapeHtml(data.image)}"' not in content
 
 
 def test_get_products_empty(client):
