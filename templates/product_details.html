@@ -113,8 +113,8 @@
                     <p class="product-description">${escapeHtml(data.description)}</p>
                     <div class="product-price">${data.price.toFixed(2)} USD</div>
                     <div class="product-actions">
-                        <input type="number" value="1" min="1" class="quantity-input" id="detail-quantity">
-                        <a href="#" class="btn" id="add-to-cart-btn">Add to Cart</a>
+                        <input type="number" value="1" min="1" class="quantity-input" id="detail-quantity" aria-label="Quantity">
+                        <a href="#" class="btn btn-primary" id="add-to-cart-btn">Add to Cart</a>
                     </div>
                 </div>
             `;
